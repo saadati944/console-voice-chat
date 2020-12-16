@@ -4,23 +4,24 @@ import pyaudio
 
 class Client:
     def __init__(self):
+        pass
+
+    def start(self, ip: str, port: int):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        
-        while 1:
-            try:
-                self.target_ip = input('Enter IP address of server --> ')
-                self.target_port = int(input('Enter target port of server --> '))
+        try:
+            self.target_ip = ip
+            self.target_port = port
 
-                self.s.connect((self.target_ip, self.target_port))
+            self.s.connect((self.target_ip, self.target_port))
 
-                break
-            except:
-                print("Couldn't connect to server")
+            return True
+        except:
+            return False
 
         chunk_size = 1024 # 512
         audio_format = pyaudio.paInt16
         channels = 1
-        rate = 20000
+        rate = 16000
 
         # initialise microphone recording
         self.p = pyaudio.PyAudio()
@@ -30,9 +31,8 @@ class Client:
         print("Connected to Server")
 
         # start threads
-        receive_thread = threading.Thread(target=self.receive_server_data).start()
+        threading.Thread(target=self.receive_server_data).start()
         self.send_data_to_server()
-
     def receive_server_data(self):
         while True:
             try:

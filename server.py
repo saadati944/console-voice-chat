@@ -3,26 +3,27 @@ import threading
 
 class Server:
     def __init__(self):
-            self.ip = socket.gethostbyname(socket.gethostname())
-            while 1:
-                try:
-                    self.port = int(input('Enter port number to run on --> '))
+        pass
+    def start(self, ip:int):
+        self.ip = socket.gethostbyname(socket.gethostname())
+        try:
+            self.port = ip
 
-                    self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    self.s.bind((self.ip, self.port))
+            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.s.bind((self.ip, self.port))
 
-                    break
-                except:
-                    print("Couldn't bind to that port")
+            return True
+        except:
+            return False
 
-            self.connections = []
-            self.accept_connections()
+        self.connections = []
+        self.accept_connections()
 
     def accept_connections(self):
         self.s.listen(100)
 
-        print('Running on IP: '+self.ip)
-        print('Running on port: '+str(self.port))
+        #print('Running on IP: '+self.ip)
+        #print('Running on port: '+str(self.port))
         
         while True:
             c, addr = self.s.accept()
