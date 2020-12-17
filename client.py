@@ -13,8 +13,6 @@ class Client:
             self.target_port = port
 
             self.s.connect((self.target_ip, self.target_port))
-
-            return True
         except:
             return False
 

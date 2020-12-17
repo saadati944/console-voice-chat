@@ -4,15 +4,13 @@ import threading
 class Server:
     def __init__(self):
         pass
-    def start(self, ip:int):
+    def start(self, port:int):
         self.ip = socket.gethostbyname(socket.gethostname())
         try:
-            self.port = ip
+            self.port = port
 
             self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.s.bind((self.ip, self.port))
-
-            return True
         except:
             return False
 
@@ -49,4 +47,8 @@ class Server:
             except socket.error:
                 c.close()
 
-server = Server()
+
+if __name__=="__main__":
+    #test
+    server = Server()
+    server.start(int(input("enter port for server : ")))
